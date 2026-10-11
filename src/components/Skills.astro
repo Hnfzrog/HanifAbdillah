@@ -1,0 +1,13 @@
+---
+import { profile } from "../data/site";
+---
+
+<section class="section" id="skill">
+  <div class="wrap">
+    <h2 class="section-title">Skill</h2>
+    <p class="section-sub">Teknologi yang saya kuasai.</p>
+    <div class="skills-grid">
+      {profile.skills.map((skill) => <span class="skill-pill">{skill}</span>)}
+    </div>
+  </div>
+</section>

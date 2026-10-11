@@ -1,0 +1,36 @@
+---
+import { navLinks } from "../data/site";
+---
+
+<header class="navbar">
+  {
+    navLinks.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))
+  }
+  <button class="theme-toggle" id="theme-toggle" aria-label="Ganti tema" type="button">
+    🌙
+  </button>
+</header>
+
+<script>
+  const btn = document.getElementById("theme-toggle") as HTMLButtonElement | null;
+  if (btn) {
+    const update = () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      btn.textContent = dark ? "☀️" : "🌙";
+    };
+    btn.addEventListener("click", () => {
+      const dark = document.documentElement.getAttribute("data-theme") === "dark";
+      if (dark) {
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("theme", "light");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
+      }
+      update();
+    });
+    update();
+  }
+</script>

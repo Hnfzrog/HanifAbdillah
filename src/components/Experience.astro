@@ -1,0 +1,22 @@
+---
+import { experiences } from "../data/site";
+---
+
+<section class="section" id="pengalaman">
+  <div class="wrap">
+    <h2 class="section-title">Pengalaman</h2>
+    <p class="section-sub">Jejak karier saya.</p>
+    <div class="timeline">
+      {experiences.map((exp) => (
+        <div class="glass timeline-item">
+          <div class="item-head">
+            <h3>{exp.role}</h3>
+            <span class="period">{exp.period}</span>
+          </div>
+          <p class="org">{exp.org}</p>
+          <p class="desc">{exp.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

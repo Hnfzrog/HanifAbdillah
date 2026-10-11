@@ -1,0 +1,19 @@
+---
+import { services } from "../data/site";
+---
+
+<section class="section" id="layanan">
+  <div class="wrap">
+    <h2 class="section-title">Layanan Jasa</h2>
+    <p class="section-sub">Saya juga membuka jasa pembuatan website.</p>
+    <div class="services-grid">
+      {services.map((service) => (
+        <div class="glass service-card">
+          <span class="service-icon">{service.icon}</span>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

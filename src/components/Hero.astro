@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import profileImg from "../assets/profile.png";
+import { profile } from "../data/site";
+---
+
+<section class="section hero" id="beranda">
+  <div class="wrap">
+    <div class="glass hero-card">
+      <div class="hero-photo-wrap">
+        <Image
+          src={profileImg}
+          alt={`Foto profil ${profile.name}`}
+          class="hero-photo"
+          widths={[160, 320, 480]}
+          sizes="(max-width: 640px) 128px, 160px"
+          format="webp"
+          loading="eager"
+        />
+      </div>
+      <p class="eyebrow">👋 Halo, saya</p>
+      <h1 class="hero-name">{profile.name}</h1>
+      <p class="hero-role">{profile.role}</p>
+      <p class="hero-tagline">{profile.tagline}</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#layanan">Lihat Layanan</a>
+        <a class="btn btn-ghost" href="#kontak">Hubungi Saya</a>
+      </div>
+    </div>
+  </div>
+</section>

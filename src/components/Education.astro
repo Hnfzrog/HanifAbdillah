@@ -1,0 +1,21 @@
+---
+import { education } from "../data/site";
+---
+
+<section class="section" id="pendidikan">
+  <div class="wrap">
+    <h2 class="section-title">Pendidikan</h2>
+    <p class="section-sub">Riwayat pendidikan saya.</p>
+    <div class="timeline">
+      {education.map((edu) => (
+        <div class="glass timeline-item">
+          <div class="item-head">
+            <h3>{edu.school}</h3>
+            <span class="period">{edu.period}</span>
+          </div>
+          <p class="desc">{edu.detail}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

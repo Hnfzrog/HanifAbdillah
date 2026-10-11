@@ -1,0 +1,19 @@
+---
+import { profile } from "../data/site";
+
+const wa = `https://wa.me/${profile.contact.whatsapp}`;
+const mail = `mailto:${profile.contact.email}`;
+---
+
+<section class="section" id="kontak">
+  <div class="wrap">
+    <h2 class="section-title">Kontak</h2>
+    <p class="section-sub">Mari diskusikan kebutuhan website Anda.</p>
+    <div class="glass contact-card">
+      <a class="btn btn-primary" href={wa} target="_blank" rel="noopener noreferrer">
+        💬 WhatsApp
+      </a>
+      <a class="btn btn-ghost" href={mail}>✉️ Email</a>
+    </div>
+  </div>
+</section>
