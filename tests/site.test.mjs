@@ -94,3 +94,10 @@ test("file dist/sitemap.xml tersedia dan valid", () => {
   const content = readFileSync(sitemapPath, "utf8");
   assert.match(content, /<loc>https:\/\/hanifabdillah\.vercel\.app\/?<\/loc>/i);
 });
+
+test("file verifikasi Google Search Console tersedia di dist", () => {
+  const gscPath = join(__dirname, "..", "dist", "googlec15f67663becd91c.html");
+  assert.ok(existsSync(gscPath), "dist/googlec15f67663becd91c.html tidak ditemukan");
+  const content = readFileSync(gscPath, "utf8");
+  assert.match(content, /google-site-verification:\s*googlec15f67663becd91c\.html/i);
+});
