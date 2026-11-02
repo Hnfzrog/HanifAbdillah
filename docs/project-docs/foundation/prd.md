@@ -52,6 +52,9 @@ Out of scope: portofolio proyek, form, backend, CMS, multi-bahasa.
 - R10: Tema light default + toggle dark (opsional).
 - R11: Responsive mobile-first, tanpa scroll horizontal.
 - R12: Foto profil bulat di Hero (sumber `image.png`), dioptimasi via `astro:assets`, responsif (clamp + srcset).
+- R13: SEO Meta Tags & Open Graph — `<title>` mengandung nama dan keyword ("Frontend Developer", "Yogyakarta", "Magelang"), meta description deskriptif, meta keywords lokal & teknis, canonical URL baku, serta Open Graph & Twitter Cards untuk preview share sosial yang rapi.
+- R14: Structured Data (JSON-LD) — Schema `Person` (identitas Hanif, alumni, afiliasi BSI UII, skill, profil terkait) dan `ProfessionalService` (jasa pembuatan website, area Magelang, Yogyakarta, Indonesia) untuk visibilitas rich snippet dan Knowledge Graph mesin pencari.
+- R15: Search Engine Directives — `robots.txt` mengizinkan perayapan dan merujuk ke `sitemap.xml`, serta `sitemap.xml` statis untuk mempercepat indeks oleh Google dan search engine lainnya tanpa biaya.
 
 ## Konten & Data
 | Field | Nilai |
@@ -72,3 +75,5 @@ Out of scope: portofolio proyek, form, backend, CMS, multi-bahasa.
 - Tidak ada dependensi backend/runtime pada output (murni HTML/CSS/JS statis).
 - Hero memuat foto profil (`<img>` dengan alt "Foto profil Hanif Abdillah Kuswanto").
 - Desain memenuhi prinsip glassmorphism (lihat `development/ui-ux.md`).
+- Output `dist/index.html` memuat canonical URL, meta description, meta keywords, Open Graph tags, dan JSON-LD schema (`Person` dan `ProfessionalService`).
+- Output build menyediakan `dist/robots.txt` dan `dist/sitemap.xml`.

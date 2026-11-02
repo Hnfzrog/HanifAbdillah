@@ -44,10 +44,11 @@ my-porto/
 ├── astro.config.mjs
 ├── package.json
 ├── tsconfig.json
+├── public/                    # aset statis publik (robots.txt, sitemap.xml, og-image)
 ├── src/
 │   ├── styles/global.css      # design system (token + kelas glass)
 │   ├── data/site.ts           # konten terpusat
-│   ├── layouts/Layout.astro   # shell html + head + background mesh
+│   ├── layouts/Layout.astro   # shell html + head (SEO, Open Graph, JSON-LD) + mesh
 │   ├── pages/index.astro      # halaman utama (rakit semua section)
 │   └── components/
 │       ├── Navbar.astro
@@ -59,8 +60,15 @@ my-porto/
 │       ├── Services.astro
 │       ├── Contact.astro
 │       └── Footer.astro
-└── tests/site.test.mjs        # test konten terhadap dist/index.html
+└── tests/site.test.mjs        # test konten & SEO terhadap dist/index.html
 ```
+
+## SEO & Search Engine Indexing
+- Canonical Site URL: `https://hanifabdillah.vercel.app`
+- Directives: `public/robots.txt` mengizinkan perayapan semua bot dan mendeklarasikan lokasi sitemap.
+- Sitemap: `public/sitemap.xml` statis (zero dependency, ringan, dan kompatibel penuh dengan Google Search Console).
+- Structured Data: Skema JSON-LD `@graph` menggabungkan `Person`, `ProfessionalService`, dan `WebSite` untuk identifikasi Knowledge Graph dan perayapan lokal.
+- Social Previews: Open Graph dan Twitter Cards dengan gambar og-image.
 
 ## Design System
 Token warna & efek didefinisikan sebagai CSS custom properties di `global.css` (lihat `development/ui-ux.md` untuk detail). Kelas kunci: `.glass`, `.blob`, `.navbar`, `.btn`.

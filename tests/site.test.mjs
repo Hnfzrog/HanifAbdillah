@@ -42,3 +42,55 @@ test("memuat foto profil", () => {
     "foto profil (img alt) tidak ditemukan di output",
   );
 });
+
+// Test SEO & Indexing (R13, R14, R15)
+test("memuat tag title dengan nama dan keyword", () => {
+  assert.match(html, /<title>[^<]*Hanif Abdillah Kuswanto[^<]*<\/title>/i);
+});
+
+test("memuat meta description yang relevan", () => {
+  assert.match(html, /<meta\s+name="description"\s+content="[^"]+Hanif Abdillah Kuswanto[^"]+"/i);
+});
+
+test("memuat meta keywords dengan target lokal & teknis", () => {
+  assert.match(html, /<meta\s+name="keywords"\s+content="[^"]*Yogyakarta[^"]*Magelang[^"]*"/i);
+});
+
+test("memuat canonical link", () => {
+  assert.match(html, /<link\s+rel="canonical"\s+href="https:\/\/hanifabdillah\.vercel\.app\/?"/i);
+});
+
+test("memuat Open Graph dan Twitter Card tags", () => {
+  assert.ok(html.includes('property="og:title"'), "og:title tidak ditemukan");
+  assert.ok(html.includes('property="og:description"'), "og:description tidak ditemukan");
+  assert.ok(html.includes('property="og:url"'), "og:url tidak ditemukan");
+  assert.ok(html.includes('name="twitter:card"'), "twitter:card tidak ditemukan");
+});
+
+test("memuat JSON-LD structured data (Person & ProfessionalService)", () => {
+  const jsonLdMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  assert.ok(jsonLdMatch, "script JSON-LD tidak ditemukan");
+  const parsed = JSON.parse(jsonLdMatch[1]);
+  const graph = parsed["@graph"] || [parsed];
+  const person = graph.find((item) => item["@type"] === "Person");
+  const service = graph.find((item) => item["@type"] === "ProfessionalService");
+  assert.ok(person, "Schema Person tidak ditemukan di JSON-LD");
+  assert.equal(person.name, "Hanif Abdillah Kuswanto");
+  assert.ok(service, "Schema ProfessionalService tidak ditemukan di JSON-LD");
+});
+
+test("file dist/robots.txt tersedia dan valid", () => {
+  const robotsPath = join(__dirname, "..", "dist", "robots.txt");
+  assert.ok(existsSync(robotsPath), "dist/robots.txt tidak ditemukan");
+  const content = readFileSync(robotsPath, "utf8");
+  assert.match(content, /User-agent:\s*\*/i);
+  assert.match(content, /Allow:\s*\//i);
+  assert.match(content, /Sitemap:\s*https:\/\/hanifabdillah\.vercel\.app\/sitemap\.xml/i);
+});
+
+test("file dist/sitemap.xml tersedia dan valid", () => {
+  const sitemapPath = join(__dirname, "..", "dist", "sitemap.xml");
+  assert.ok(existsSync(sitemapPath), "dist/sitemap.xml tidak ditemukan");
+  const content = readFileSync(sitemapPath, "utf8");
+  assert.match(content, /<loc>https:\/\/hanifabdillah\.vercel\.app\/?<\/loc>/i);
+});

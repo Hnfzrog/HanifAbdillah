@@ -1,12 +1,126 @@
 ---
 import "../styles/global.css";
+import { profile } from "../data/site";
 
 interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
 }
 
-const { title, description } = Astro.props;
+const canonicalUrl = Astro.props.canonical ?? "https://hanifabdillah.vercel.app/";
+const siteTitle = Astro.props.title ?? `${profile.name} — ${profile.role} & Jasa Pembuatan Website`;
+const siteDescription =
+  Astro.props.description ??
+  `Portofolio dan jasa pembuatan website profesional oleh ${profile.name} (${profile.role}). Melayani pembuatan website, landing page, dan frontend di Yogyakarta, Magelang, dan seluruh Indonesia.`;
+const ogImage = Astro.props.image ?? "https://hanifabdillah.vercel.app/og-image.png";
+
+const keywords = [
+  "Hanif Abdillah Kuswanto",
+  "Frontend Developer Yogyakarta",
+  "Frontend Developer Magelang",
+  "Web Developer Yogyakarta",
+  "Web Developer Magelang",
+  "Jasa Pembuatan Website Yogyakarta",
+  "Jasa Website Magelang",
+  "Jasa Landing Page Yogyakarta",
+  "Jasa Web App Magelang",
+  "Freelance Frontend Developer Indonesia",
+  "Angular Developer",
+  "TypeScript Developer",
+  "React Developer",
+  "Vue Developer",
+  "Slicing Figma Yogyakarta",
+  "Badan Sistem Informasi UII",
+].join(", ");
+
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://hanifabdillah.vercel.app/#person",
+      "name": profile.name,
+      "url": "https://hanifabdillah.vercel.app/",
+      "image": ogImage,
+      "jobTitle": profile.role,
+      "description": profile.about,
+      "email": profile.contact.email,
+      "telephone": `+${profile.contact.whatsapp}`,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Magelang",
+        "addressRegion": "Jawa Tengah",
+        "addressCountry": "ID",
+      },
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Badan Sistem Informasi UII",
+        "url": "https://bsi.uii.ac.id",
+      },
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Universitas Mercu Buana",
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "SMK N 2 Magelang",
+        },
+      ],
+      "knowsAbout": [
+        ...profile.skills,
+        "Frontend Development",
+        "Web Development",
+        "Single Page Application",
+        "Responsive Web Design",
+        "Figma Slicing",
+      ],
+      "sameAs": [
+        "https://bsi.uii.ac.id",
+        "https://github.com/hanifabdillah",
+        "https://www.linkedin.com/in/hanif-abdillah-kuswanto",
+      ],
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://hanifabdillah.vercel.app/#service",
+      "name": `Jasa Pembuatan Website & Frontend Developer — ${profile.name}`,
+      "url": "https://hanifabdillah.vercel.app/",
+      "image": ogImage,
+      "telephone": `+${profile.contact.whatsapp}`,
+      "email": profile.contact.email,
+      "priceRange": "$$",
+      "areaServed": [
+        { "@type": "City", "name": "Yogyakarta" },
+        { "@type": "City", "name": "Magelang" },
+        { "@type": "Country", "name": "Indonesia" },
+      ],
+      "serviceType": [
+        "Jasa Pembuatan Website",
+        "Landing Page & Company Profile",
+        "Website Portofolio Pribadi",
+        "Web Aplikasi Frontend (SPA)",
+        "Slicing Desain Figma & Responsive UI",
+      ],
+      "provider": {
+        "@id": "https://hanifabdillah.vercel.app/#person",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://hanifabdillah.vercel.app/#website",
+      "url": "https://hanifabdillah.vercel.app/",
+      "name": `${profile.name} — Portfolio & Web Services`,
+      "description": siteDescription,
+      "inLanguage": "id-ID",
+      "publisher": {
+        "@id": "https://hanifabdillah.vercel.app/#person",
+      },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -15,8 +129,38 @@ const { title, description } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+
+    <!-- Primary Meta Tags -->
+    <title>{siteTitle}</title>
+    <meta name="title" content={siteTitle} />
+    <meta name="description" content={siteDescription} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Robots -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={`${profile.name} Portfolio`} />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaJson)} />
+
     <script is:inline>
       // Terapkan tema sebelum render agar tidak flash (FOUC).
       try {
