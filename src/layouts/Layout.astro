@@ -127,6 +127,7 @@ const schemaJson = {
     <meta name="keywords" content={keywords} />
     <meta name="author" content={profile.name} />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <!-- Robots -->
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -154,12 +155,12 @@ const schemaJson = {
     <script is:inline>
       // Apply theme before render to eliminate flash of unstyled content (FOUC).
       try {
-        var t = localStorage.getItem("theme");
-        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (t === "dark" || (!t && prefersDark)) {
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
           document.documentElement.setAttribute("data-theme", "dark");
         }
-      } catch (e) {}
+      } catch {}
     </script>
   </head>
   <body>

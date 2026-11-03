@@ -49,6 +49,21 @@ test("memuat tag title dengan nama dan keyword", () => {
   assert.match(html, /<title>[^<]*Hanif Abdillah Kuswanto[^<]*<\/title>/i);
 });
 
+test("panjang title dan meta description sesuai rekomendasi SEO", () => {
+  const title = html.match(/<title>([^<]+)<\/title>/i)?.[1];
+  const description = html.match(/<meta\s+name="description"\s+content="([^"]+)"/i)?.[1];
+
+  assert.ok(title, "title tidak ditemukan");
+  assert.ok(description, "meta description tidak ditemukan");
+  assert.ok(title.length <= 60, `title terlalu panjang: ${title.length} karakter`);
+  assert.ok(description.length <= 160, `meta description terlalu panjang: ${description.length} karakter`);
+});
+
+test("favicon tersedia di output build", () => {
+  assert.ok(existsSync(join(__dirname, "..", "dist", "favicon.svg")), "dist/favicon.svg tidak ditemukan");
+  assert.match(html, /rel="icon"[^>]*href="\/favicon\.svg"/i);
+});
+
 test("memuat meta description yang relevan", () => {
   assert.match(html, /<meta\s+name="description"\s+content="[^"]+Hanif Abdillah Kuswanto[^"]+"/i);
 });
