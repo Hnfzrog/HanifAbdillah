@@ -25,20 +25,21 @@ test("memuat seluruh skill", () => {
 });
 
 test("memuat link WhatsApp", () => {
-  assert.ok(html.includes("wa.me/6281392186005"), "link wa.me tidak ditemukan");
+  assert.ok(html.includes("wa.me/6285181804925"), "link wa.me baru 6285181804925 tidak ditemukan");
 });
 
 test("memuat link email", () => {
   assert.ok(html.includes("mailto:hanifabdillah668@gmail.com"), "link mailto tidak ditemukan");
 });
 
-test("memuat judul section layanan jasa", () => {
-  assert.ok(html.includes("Layanan Jasa"), "section layanan tidak ditemukan");
+test("memuat judul section layanan jasa (Services)", () => {
+  assert.ok(html.includes("Services"), "section services tidak ditemukan");
 });
 
 test("memuat foto profil", () => {
-  assert.ok(
-    html.includes('alt="Foto profil Hanif Abdillah Kuswanto"'),
+  assert.match(
+    html,
+    /alt="[^"]*Hanif Abdillah Kuswanto[^"]*"/i,
     "foto profil (img alt) tidak ditemukan di output",
   );
 });
@@ -100,4 +101,36 @@ test("file verifikasi Google Search Console tersedia di dist", () => {
   assert.ok(existsSync(gscPath), "dist/googlec15f67663becd91c.html tidak ditemukan");
   const content = readFileSync(gscPath, "utf8");
   assert.match(content, /google-site-verification:\s*googlec15f67663becd91c\.html/i);
+});
+
+// Test Pro Web Developer Overhaul (v2.0: R16, R17, R18, R19)
+test("memuat section Proyek Pilihan / Featured Projects dan 5 proyek unggulan", () => {
+  assert.ok(html.includes("Featured Projects") || html.includes("Proyek"), "section proyek tidak ditemukan");
+  assert.ok(html.includes("App-Math"), "proyek App-Math tidak ditemukan");
+  assert.ok(html.includes("Telenurse"), "proyek Telenurse tidak ditemukan");
+  assert.ok(html.includes("UD-Sregep"), "proyek UD-Sregep tidak ditemukan");
+  assert.ok(html.includes("Lumpiamoo"), "proyek Lumpiamoo tidak ditemukan");
+  assert.ok(html.includes("DailyKit"), "proyek DailyKit tidak ditemukan");
+});
+
+test("memuat tautan profil GitHub resmi", () => {
+  assert.ok(html.includes("github.com/Hnfzrog"), "link GitHub Hnfzrog tidak ditemukan");
+});
+
+test("memuat badge availability status di Hero", () => {
+  assert.match(html, /Tersedia untuk Freelance|Available for/i);
+});
+
+test("memuat pengelompokan skill profesional", () => {
+  assert.ok(html.includes("Core Frameworks") || html.includes("Frameworks"), "kategori framework tidak ditemukan");
+  assert.ok(html.includes("Languages"), "kategori languages tidak ditemukan");
+});
+
+test("menggunakan bahasa inggris sebagai bahasa utama", () => {
+  assert.match(html, /<html\s+lang="en">/i);
+});
+
+test("section pendidikan tidak lagi dimuat di halaman utama", () => {
+  assert.ok(!html.includes("Pendidikan"), "teks Pendidikan masih ada di halaman");
+  assert.ok(!html.includes("SMK N 2 Magelang"), "sekolah SMK N 2 Magelang masih ada di halaman");
 });

@@ -54,10 +54,10 @@ my-porto/
 │       ├── Navbar.astro
 │       ├── Hero.astro
 │       ├── About.astro
-│       ├── Skills.astro
+│       ├── Projects.astro     # section proyek unggulan (bento-grid glass cards)
+│       ├── Skills.astro       # categorized tech matrix
 │       ├── Experience.astro
-│       ├── Education.astro
-│       ├── Services.astro
+│       ├── Services.astro     # services dengan deliverable checkmarks
 │       ├── Contact.astro
 │       └── Footer.astro
 └── tests/site.test.mjs        # test konten & SEO terhadap dist/index.html
